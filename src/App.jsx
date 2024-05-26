@@ -9,6 +9,7 @@ import WinnerListPage from "./pages/WinnerListPage";
 import BanNumberPage from "./pages/BanNumber";
 import ReportPage from "./pages/ReportPage";
 import LimitNumberPage from "./pages/LimitNumberPage";
+import ManageOddPage from "./pages/ManageOddPage";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/winnerlists" element=<WinnerListPage /> />
         <Route path="/bannumbers" element=<BanNumberPage /> />
         <Route path="/limitnumbers" element=<LimitNumberPage /> />
+        <Route path="/manageodds" element=<ManageOddPage /> />
         <Route path="/reports" element=<ReportPage /> />
         <Route path="/" exact element=<HomePage /> />
       </Routes>

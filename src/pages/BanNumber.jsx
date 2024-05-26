@@ -20,7 +20,7 @@ const SettingPage = () => {
 
   const addBanNumber = async () => {
     try {
-      const res = await axios.post(`${baseUrl}/admin/setting/ban-number`, {
+      await axios.post(`${baseUrl}/admin/setting/ban-number`, {
         number,
       });
       setBannedNumbers([...bannedNumbers, number]);

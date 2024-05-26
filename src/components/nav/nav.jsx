@@ -18,7 +18,6 @@ import { NavLink } from "react-router-dom";
 import {
   Menu,
   Dashboard,
-  Add,
   Filter3,
   EmojiObjects,
   Group,
@@ -69,6 +68,11 @@ const nav = () => {
       name: "Limit Numbers",
       icon: <Settings />,
       route: "/limitnumbers",
+    },
+    {
+      name: "Manage Odds",
+      icon: <Settings />,
+      route: "/manageodds",
     },
     {
       name: "Reports",
