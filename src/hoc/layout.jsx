@@ -17,7 +17,7 @@ const layout = (props) => {
         return navigate("/");
       }
     }
-  }, [navigate, location]);
+  }, []);
 
   return (
     <>

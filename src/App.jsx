@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import LatestBetPage from "./pages/LatestBetPage";
 import AgentPage from "./pages/AgentPage";
+import AgentTransactionPage from "./pages/AgentTransactionPage";
 import WinningNumbberPage from "./pages/WinningNumberPage";
 import WinnerListPage from "./pages/WinnerListPage";
 import BanNumberPage from "./pages/BanNumber";
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/login" element=<LoginPage /> />
         <Route path="/latestbets" element=<LatestBetPage /> />
         <Route path="/agents" element=<AgentPage /> />
+        <Route path="/agenttransactions" element=<AgentTransactionPage /> />
         <Route path="/winningnumbers" element=<WinningNumbberPage /> />
         <Route path="/winnerlists" element=<WinnerListPage /> />
         <Route path="/bannumbers" element=<BanNumberPage /> />

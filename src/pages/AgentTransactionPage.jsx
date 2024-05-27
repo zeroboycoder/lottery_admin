@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Typography,
-  Pagination,
-  Button,
-  TextField,
-  Modal,
-} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import Loading from "../components/loading/loading";
-import moment from "moment";
+import {
+  Typography,
+  Container,
+  Modal,
+  TextField,
+  Button,
+  Pagination,
+} from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
+import moment from "moment";
+import Loading from "../components/loading/loading";
 import { baseUrl } from "../config/base_url";
 
-const AgentPage = () => {
+const AgentTransactionPage = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [agents, setAgents] = useState([]);
+  const [transaction, setTransaction] = useState([]);
   const [phone, setPhone] = useState(null);
-  const [name, setName] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [amount, setAmount] = useState();
+  const [date, setDate] = useState();
   const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inputLoading, setInputLoading] = useState(false);
@@ -28,19 +31,41 @@ const AgentPage = () => {
   const showPerPage = 10;
 
   useEffect(() => {
-    const fetchAgent = async () => {
+    const fetchData = async () => {
       const res = await axios.get(
-        `${baseUrl}/admin/agent?page=${page}&showPerPage=${showPerPage}&sort=desc`
+        `${baseUrl}/admin/transaction?page=${page}&showPerPage=${showPerPage}&sort=desc`
       );
-      setAgents(res.data.data.data);
+      setTransaction(res.data.data.data);
       setCount(res.data.data.totalCount);
       setLoading(false);
     };
-    fetchAgent();
+    fetchData();
   }, [page]);
 
+  const addTransactionHandler = async () => {
+    try {
+      setInputLoading(true);
+      const data = {
+        phone,
+        amount,
+        date: moment(date).format("YYYY-MM-DD"),
+      };
+
+      const res = await axios.post(`${baseUrl}/admin/transaction`, data);
+      setTransaction(res.data.data.data);
+      setInputLoading(false);
+      setPhone(null);
+      setAmount(null);
+      setDate(null);
+      setOpenModal(false);
+    } catch (error) {
+      setOpenModal(false);
+      setErrorMsg(error.response.data.msg);
+    }
+  };
+
   const columns = [
-    { field: "id", headerName: "No", width: 90 },
+    { field: "id", headerName: "No", width: 100 },
     { field: "name", headerName: "Name", width: 150 },
     {
       field: "phone",
@@ -48,36 +73,26 @@ const AgentPage = () => {
       width: 130,
     },
     {
-      field: "registerDate",
-      headerName: "Register Date",
+      field: "date",
+      headerName: "Pay Date",
+      width: 130,
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
       width: 130,
     },
   ];
 
-  const rows = agents?.map((agent, i) => ({
-    ...agent,
-    id: ++i + (page - 1) * showPerPage,
-    registerDate: moment(agent?.createdAt).format("DD MMM YYYY"),
-  }));
-
-  const createAgentHandler = async () => {
-    setInputLoading(true);
-    try {
-      const data = {
-        phone,
-        name,
-        password,
-      };
-      const res = await axios.post(`${baseUrl}/agent/auth/register`, data);
-      setInputLoading(false);
-      setAgents(res.data.data.data);
-      setCount(res.data.data.totalCount);
-      setOpenModal(false);
-    } catch (error) {
-      setInputLoading(false);
-      setErrorMsg(error.response.data.msg);
-    }
-  };
+  const rows = transaction
+    ? transaction?.map((trx, i) => ({
+        id: ++i + (page - 1) * showPerPage,
+        ...trx,
+        name: trx.agentId.name,
+        phone: trx.agentId.phone,
+        amount: trx.amount + " Ks",
+      }))
+    : [];
 
   return (
     <>
@@ -89,7 +104,7 @@ const AgentPage = () => {
             {/* Latest Bets */}
             <div style={{ height: "100%", width: "100%" }}>
               <Typography variant="h5" my={2}>
-                Agents
+                Agent Transactions
               </Typography>
               <DataGrid
                 rows={rows}
@@ -117,7 +132,7 @@ const AgentPage = () => {
               color="error"
               onClick={() => setOpenModal(true)}
             >
-              Creae Agent
+              Add Transaction
             </Button>
           </Container>
 
@@ -129,7 +144,7 @@ const AgentPage = () => {
           >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10/12 bg-white p-5">
               <div className="flex flex-col space-y-3">
-                <h1 className="text-xl font-medium">Create Agent</h1>
+                <h1 className="text-xl font-medium">Add transaction</h1>
                 <TextField
                   id="outlined-basic"
                   label="Phone"
@@ -138,16 +153,13 @@ const AgentPage = () => {
                 />
                 <TextField
                   id="outlined-basic"
-                  label="Name"
+                  label="Amount"
                   variant="outlined"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setAmount(e.target.value)}
                 />
-                <TextField
-                  id="outlined-basic"
-                  label="Password"
-                  variant="outlined"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker onChange={(e) => setDate(e)} />
+                </LocalizationProvider>
                 {errorMsg && (
                   <p className="text-red-500 text-sm m-0">{errorMsg}</p>
                 )}
@@ -159,9 +171,9 @@ const AgentPage = () => {
                   <Button
                     variant="outlined"
                     color="error"
-                    onClick={createAgentHandler}
+                    onClick={addTransactionHandler}
                   >
-                    Create Agent
+                    Limit Number
                   </Button>
                 )}
               </div>
@@ -173,4 +185,4 @@ const AgentPage = () => {
   );
 };
 
-export default AgentPage;
+export default AgentTransactionPage;

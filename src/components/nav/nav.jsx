@@ -21,8 +21,11 @@ import {
   Filter3,
   EmojiObjects,
   Group,
-  Settings,
   AssessmentOutlined,
+  Looks3,
+  Block,
+  KeyboardDoubleArrowUp,
+  Receipt,
 } from "@mui/icons-material";
 
 const nav = () => {
@@ -45,6 +48,11 @@ const nav = () => {
       route: "/agents",
     },
     {
+      name: "Agent Transaction",
+      icon: <Receipt />,
+      route: "/agenttransactions",
+    },
+    {
       name: "Latest Bets",
       icon: <Filter3 />,
       route: "/latestbets",
@@ -61,17 +69,17 @@ const nav = () => {
     },
     {
       name: "Ban Numbers",
-      icon: <Settings />,
+      icon: <Block />,
       route: "/bannumbers",
     },
     {
       name: "Limit Numbers",
-      icon: <Settings />,
+      icon: <Looks3 />,
       route: "/limitnumbers",
     },
     {
       name: "Manage Odds",
-      icon: <Settings />,
+      icon: <KeyboardDoubleArrowUp />,
       route: "/manageodds",
     },
     {
@@ -99,7 +107,7 @@ const nav = () => {
   );
 
   return (
-    <AppBar position="fixed" style={{ backgroundColor: "#E72929" }}>
+    <AppBar position="fixed" style={{ backgroundColor: "#D32F2E" }}>
       <Toolbar>
         <Stack
           justifyContent="space-between"
