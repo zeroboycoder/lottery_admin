@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Stack, TextField, Button } from "@mui/material";
 import axios from "axios";
+import BgImage from "../assets/img/login_bg.png";
 
 import { baseUrl } from "../config/base_url";
 
@@ -28,30 +29,44 @@ const LoginPage = () => {
   };
 
   return (
-    <Stack
-      justifyContent="center"
-      alignItems="center"
-      style={{ width: "100%", height: "calc(100vh - 200px)" }}
+    <div
+      style={{
+        backgroundImage: `url(${BgImage})`,
+        height: "100vh",
+        marginTop: "-84px",
+      }}
     >
-      <div className="flex flex-col w-72 space-y-5">
-        <h1 className="text-center text-3xl font-bold">Welcome Back!</h1>
-        <TextField
-          id="outlined-basic"
-          label="Phone"
-          variant="outlined"
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Password"
-          variant="outlined"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button variant="outlined" onClick={loginHandler}>
-          Login
-        </Button>
-      </div>
-    </Stack>
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        style={{
+          width: "100%",
+          height: "calc(100vh - 200px)",
+          background: "url(../assets/img/login_bg.jpeg)",
+        }}
+      >
+        <div className="flex flex-col w-72 space-y-5">
+          <h1 className="text-center text-3xl font-bold">Welcome Back!</h1>
+          <TextField
+            id="outlined-basic"
+            label="Phone"
+            variant="outlined"
+            style={{ backgroundColor: "#eee", borderRadius: "6px" }}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Password"
+            variant="outlined"
+            style={{ backgroundColor: "#eee", borderRadius: "6px" }}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button variant="contained" color="error" onClick={loginHandler}>
+            Login
+          </Button>
+        </div>
+      </Stack>
+    </div>
   );
 };
 
