@@ -1,5 +1,17 @@
 import { useState, useEffect } from "react";
-import { Container, Button, Modal, TextField } from "@mui/material";
+import {
+  Container,
+  Button,
+  Modal,
+  TextField,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableContainer,
+  Paper,
+} from "@mui/material";
+
 import Loading from "../components/loading/loading";
 import axios from "axios";
 import { baseUrl } from "../config/base_url";
@@ -7,7 +19,9 @@ import { baseUrl } from "../config/base_url";
 const ManageOddPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [odds, setOdds] = useState(null);
+  const [tootOdds, setTootOdds] = useState(null);
   const [number, setNumber] = useState();
+  const [tootNumber, setTootNumber] = useState();
   const [loading, setLoading] = useState(true);
   const [inputLoading, setInputLoading] = useState(false);
 
@@ -15,8 +29,8 @@ const ManageOddPage = () => {
     const fetchOdds = async () => {
       setLoading(true);
       const res = await axios.get(`${baseUrl}/admin/setting/odds`);
-      console.log(res.data.data);
-      setOdds(res.data.data);
+      setOdds(res.data.data.odds);
+      setTootOdds(res.data.data.tootOdds);
       setLoading(false);
     };
     fetchOdds();
@@ -27,8 +41,10 @@ const ManageOddPage = () => {
       setInputLoading(true);
       const res = await axios.post(`${baseUrl}/admin/setting/odds`, {
         odds: number,
+        tootOdds: tootNumber,
       });
-      setOdds(res.data.data);
+      setOdds(res.data.data.odds);
+      setTootOdds(res.data.data.tootOdds);
       setInputLoading(false);
       setOpenModal(false);
     } catch (error) {
@@ -43,11 +59,34 @@ const ManageOddPage = () => {
       ) : (
         <>
           <Container>
-            <h1 className="text-2xl font-bold mb-xl">Current Odds</h1>
+            <h1 className="text-2xl font-bold mb-xl">Odds</h1>
             <div className="flex  mt-4">
-              <p className="border border-red-500 py-3 px-4 w-fit text-xl font-medium">
-                {odds ? `${odds}X` : <p>No odds currently set.</p>}
-              </p>
+              <TableContainer component={Paper}>
+                <Table className="w-full border" aria-label="simple table">
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>
+                        <p className="font-medium">Direct Odds</p>
+                      </TableCell>
+                      <TableCell>
+                        <p className="font-medium">
+                          {odds ? odds : "Please update odds."}
+                        </p>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>
+                        <p className="font-medium">Toot Odds</p>
+                      </TableCell>
+                      <TableCell>
+                        <p className="font-medium">
+                          {tootOdds ? tootOdds : "Please update odds."}
+                        </p>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </div>
           </Container>
           <Container className="fixed bottom-0 w-full py-3 border border-t-2 bg-white">
@@ -72,9 +111,15 @@ const ManageOddPage = () => {
                 <h1 className="text-xl font-medium">Update Odds</h1>
                 <TextField
                   id="outlined-basic"
-                  label="Odds"
+                  label="Direct Odds"
                   variant="outlined"
                   onChange={(e) => setNumber(e.target.value)}
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Toot Odds"
+                  variant="outlined"
+                  onChange={(e) => setTootNumber(e.target.value)}
                 />
                 {inputLoading ? (
                   <Button variant="outlined" color="error">
