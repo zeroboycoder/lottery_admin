@@ -22,7 +22,7 @@ const LoginPage = () => {
       const adminId = res?.data?.data?.adminId;
       localStorage.setItem("token", token);
       localStorage.setItem("adminId", adminId);
-      return navigate("/");
+      return navigate("/admin/");
     } catch (error) {
       console.log(error);
     }
