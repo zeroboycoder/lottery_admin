@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Nav from "../components/nav/nav";
 
-const layout = (props) => {
+const Layout = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -11,10 +11,10 @@ const layout = (props) => {
     const token = localStorage.getItem("token");
     const adminId = localStorage.getItem("adminId");
     if (!token || !adminId) {
-      return navigate("/login");
+      return navigate("/admin/login");
     } else {
       if (location.pathname === "/login") {
-        return navigate("/");
+        return navigate("/admin/");
       }
     }
   }, []);
@@ -28,4 +28,4 @@ const layout = (props) => {
   );
 };
 
-export default layout;
+export default Layout;

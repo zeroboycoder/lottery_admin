@@ -16,17 +16,20 @@ const App = () => {
   return (
     <Layout>
       <Routes>
-        <Route path="/login" element=<LoginPage /> />
-        <Route path="/latestbets" element=<LatestBetPage /> />
-        <Route path="/agents" element=<AgentPage /> />
-        <Route path="/agenttransactions" element=<AgentTransactionPage /> />
-        <Route path="/winningnumbers" element=<WinningNumbberPage /> />
-        <Route path="/winnerlists" element=<WinnerListPage /> />
-        <Route path="/bannumbers" element=<BanNumberPage /> />
-        <Route path="/limitnumbers" element=<LimitNumberPage /> />
-        <Route path="/manageodds" element=<ManageOddPage /> />
-        <Route path="/reports" element=<ReportPage /> />
-        <Route path="/" exact element=<HomePage /> />
+        <Route path="/admin/login" element=<LoginPage /> />
+        <Route path="/admin/latestbets" element=<LatestBetPage /> />
+        <Route path="/admin/agents" element=<AgentPage /> />
+        <Route
+          path="/admin/agenttransactions"
+          element=<AgentTransactionPage />
+        />
+        <Route path="/admin/winningnumbers" element=<WinningNumbberPage /> />
+        <Route path="/admin/winnerlists" element=<WinnerListPage /> />
+        <Route path="/admin/bannumbers" element=<BanNumberPage /> />
+        <Route path="/admin/limitnumbers" element=<LimitNumberPage /> />
+        <Route path="/admin/manageodds" element=<ManageOddPage /> />
+        <Route path="/admin/reports" element=<ReportPage /> />
+        <Route path="/admin/" exact element=<HomePage /> />
       </Routes>
     </Layout>
   );

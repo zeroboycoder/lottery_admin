@@ -40,52 +40,52 @@ const nav = () => {
     {
       name: "Dashboard",
       icon: <Dashboard />,
-      route: "/",
+      route: "/admin/",
     },
     {
       name: "Agents",
       icon: <Group />,
-      route: "/agents",
+      route: "/admin/agents",
     },
     {
       name: "Agent Transaction",
       icon: <Receipt />,
-      route: "/agenttransactions",
+      route: "/admin/agenttransactions",
     },
     {
       name: "Latest Bets",
       icon: <Filter3 />,
-      route: "/latestbets",
+      route: "/admin/latestbets",
     },
     {
       name: "Winning Numbers",
       icon: <EmojiObjects />,
-      route: "/winningnumbers",
+      route: "/admin/winningnumbers",
     },
     {
       name: "Winner Lists",
       icon: <Group />,
-      route: "/winnerlists",
+      route: "/admin/winnerlists",
     },
     {
       name: "Ban Numbers",
       icon: <Block />,
-      route: "/bannumbers",
+      route: "/admin/bannumbers",
     },
     {
       name: "Limit Numbers",
       icon: <Looks3 />,
-      route: "/limitnumbers",
+      route: "/admin/limitnumbers",
     },
     {
       name: "Manage Odds",
       icon: <KeyboardDoubleArrowUp />,
-      route: "/manageodds",
+      route: "/admin/manageodds",
     },
     {
       name: "Reports",
       icon: <AssessmentOutlined />,
-      route: "/reports",
+      route: "/admin/reports",
     },
   ];
 
